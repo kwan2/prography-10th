@@ -1,0 +1,14 @@
+package com.prography.assignment.api.userRoom.domain.type;
+
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+
+@Getter
+@RequiredArgsConstructor
+public enum TeamType {
+    RED("RED", "레드팀"),
+    BLUE("BLUE", "블루팀");
+
+    private final String value;
+    private final String description;
+}
