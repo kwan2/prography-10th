@@ -50,11 +50,10 @@ public class RoomService {
         if(userRoomManager.isOneOfPlayer(host.getId())) {
             throw new CommonException(ErrorCode.SERVER_ERROR);
         }
-
         // 방생성
         Room room = Room.of(request.title(), host, RoomType.valueOf(request.roomType()) ,RoomStatus.WAIT);
 
-        roomManager.insertRoom(room);
+        room = roomManager.insertRoom(room);
 
         userRoomManager.insertUserRoom(host, room, TeamType.RED);
 

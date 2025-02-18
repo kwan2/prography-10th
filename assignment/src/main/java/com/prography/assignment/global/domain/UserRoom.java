@@ -10,8 +10,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
-import java.util.List;
 
 @Entity
 @Getter
@@ -32,6 +30,7 @@ public class UserRoom {
     private User user;
 
     @Column(name = "team")
+    @Enumerated(EnumType.STRING)
     private TeamType team;
 
     @Builder
@@ -46,6 +45,7 @@ public class UserRoom {
         return UserRoom.builder()
                 .user(user)
                 .room(room)
+                .teamType(teamType)
                 .build();
     }
 

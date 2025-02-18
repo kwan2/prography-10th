@@ -32,9 +32,11 @@ public class Room {
     private User host;
 
     @Column(name = "room_type")
+    @Enumerated(EnumType.STRING)
     private RoomType roomType;
 
     @Column(name = "status")
+    @Enumerated(EnumType.STRING)
     private RoomStatus status;
 
     @Column(name = "created_at")

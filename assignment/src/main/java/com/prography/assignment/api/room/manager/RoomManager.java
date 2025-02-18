@@ -29,8 +29,8 @@ public class RoomManager {
     private final TaskScheduler taskScheduler;
     private final UserRoomManager userRoomManager;
 
-    public void insertRoom(Room room) {
-        roomRepository.save(room);
+    public Room insertRoom(Room insertRoom) {
+        return roomRepository.save(insertRoom);
     }
 
     public void deleteAll() {

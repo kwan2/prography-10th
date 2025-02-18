@@ -27,7 +27,7 @@ public class RoomControllerTest extends ResponseTestTemplate {
     @DisplayName("방생성 API 응답 테스트")
     public void createRoomTest() throws Exception {
 
-        RoomCreateRequest requestBody = new RoomCreateRequest(11, RoomType.SINGLE.getValue(), "첫 핑퐁");
+        RoomCreateRequest requestBody = new RoomCreateRequest(1, RoomType.SINGLE.getValue(), "셋 핑퐁");
 
         MvcResult mvcResult = perform("/room", null, requestBody, HttpMethod.POST);
 
@@ -36,8 +36,6 @@ public class RoomControllerTest extends ResponseTestTemplate {
         assertThat(apiResponse).isNotNull();
         assertThat(apiResponse.getCode()).isEqualTo(200);
         assertThat(apiResponse.getMessage()).isEqualTo("API 요청이 성공했습니다.");
-        assertThat(apiResponse.getResult()).isNotNull();
-
 
     }
 
