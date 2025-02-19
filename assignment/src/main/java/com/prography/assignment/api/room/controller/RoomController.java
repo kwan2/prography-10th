@@ -1,7 +1,7 @@
 package com.prography.assignment.api.room.controller;
 
 import com.prography.assignment.api.room.dto.RoomDetailResponse;
-import com.prography.assignment.api.room.dto.request.RoomChangeRequest;
+import com.prography.assignment.api.room.dto.request.RoomUpdateRequest;
 import com.prography.assignment.api.room.dto.request.RoomCreateRequest;
 import com.prography.assignment.api.room.dto.response.RoomTotalResponse;
 import com.prography.assignment.api.room.service.RoomService;
@@ -37,22 +37,22 @@ public class RoomController {
 
     @PostMapping("/attention/{roomId}")
     public ApiResponse<Void> createRoomAttention(
-            @PathVariable("roomId")Integer roomId,
-            @Valid @RequestBody RoomChangeRequest request){
+            @PathVariable(value = "roomId") Integer roomId,
+            @Valid @RequestBody RoomUpdateRequest request){
         return roomService.joinRoom(roomId, request.userId());
     }
 
     @PostMapping("/out/{roomId}")
     public ApiResponse<Void> deleteRoomLeave(
             @PathVariable("roomId")Integer roomId,
-            @Valid @RequestBody RoomChangeRequest request){
+            @Valid @RequestBody RoomUpdateRequest request){
         return roomService.leaveRoom(roomId, request.userId());
     }
 
     @PutMapping("/start/{roomId}")
     public ApiResponse<Void> createStartRoom(
             @PathVariable("roomId")Integer roomId,
-            @Valid @RequestBody RoomChangeRequest request){
+            @Valid @RequestBody RoomUpdateRequest request){
         return roomService.startRoom(roomId, request.userId());
     }
 

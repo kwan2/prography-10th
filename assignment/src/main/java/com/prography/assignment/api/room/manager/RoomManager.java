@@ -11,24 +11,24 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.jdbc.core.metadata.HsqlTableMetaDataProvider;
 import org.springframework.scheduling.TaskScheduler;
 import org.springframework.stereotype.Component;
 
 import java.time.Instant;
-import java.time.LocalDateTime;
-import java.util.Date;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Slf4j
-@RequiredArgsConstructor
 @Component
+@RequiredArgsConstructor
 public class RoomManager {
 
     private final RoomRepository roomRepository;
     private final TaskScheduler taskScheduler;
     private final UserRoomManager userRoomManager;
 
+    @Transactional
     public Room insertRoom(Room insertRoom) {
         return roomRepository.save(insertRoom);
     }
@@ -37,7 +37,7 @@ public class RoomManager {
         roomRepository.deleteAll();
     }
 
-    public Page<Room> findRoomPageInfo (Pageable pageable) {
+    public Page<Room> findRoomPageInfo(Pageable pageable) {
         return roomRepository.findAll(pageable);
     }
 
@@ -45,8 +45,8 @@ public class RoomManager {
         return roomRepository.findAllOrderByWithPagination(pageable);
     }
 
-    public Room findRoom(Integer id) {
-        return roomRepository.findByIdAndDeletedAtIsNull(id)
+    public Room findRoom(Integer roomId) {
+        return roomRepository.findByIdAndDeletedAtIsNull(roomId)
                 .orElseThrow(() -> new CommonException(ErrorCode.SERVER_ERROR));
     }
 
@@ -57,10 +57,20 @@ public class RoomManager {
     @Transactional
     public void scheduleStatusChange(Room room, RoomStatus status) {
         Instant executionTime = Instant.now().plusSeconds(60);
-        taskScheduler.schedule(() -> changeStatus(room, status), executionTime);
+
+        log.info("게임 실행 후 변경 예정 시간: {}",
+                DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
+                        .format(executionTime.atZone(ZoneId.of("Asia/Seoul"))));
+
+        taskScheduler.schedule(() -> {
+            log.info("실제 실행 시간: {}", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
+                            .format(Instant.now().atZone(ZoneId.of("Asia/Seoul"))));
+            changeStatus(room, status);
+        }, executionTime);
     }
 
-    private void changeStatus(Room room, RoomStatus status) {
+
+    public void changeStatus(Room room, RoomStatus status) {
 
         roomRepository.updateRoomStatus(room.getId(), status);
 

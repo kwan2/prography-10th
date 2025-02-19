@@ -2,7 +2,6 @@ package com.prography.assignment.global.domain;
 
 import com.prography.assignment.api.room.domain.Room;
 import com.prography.assignment.api.user.domain.User;
-import com.prography.assignment.api.user.domain.type.UserStatus;
 import com.prography.assignment.api.userRoom.domain.type.TeamType;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -21,7 +20,7 @@ public class UserRoom {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     @JoinColumn(name = "room_id", nullable = false)
     private Room room;
 

@@ -2,7 +2,7 @@ package com.prography.assignment.api.room.repository;
 
 import com.prography.assignment.api.room.domain.Room;
 import com.prography.assignment.api.room.domain.type.RoomStatus;
-import com.prography.assignment.api.user.domain.User;
+import jakarta.transaction.Transactional;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -25,6 +25,7 @@ public interface RoomRepository extends JpaRepository<Room, Integer> {
     Optional<Room> findByIdAndDeletedAtIsNull(@Param("roomId") Integer roomId);
 
     @Modifying
+    @Transactional
     @Query("UPDATE Room r SET r.status = :status WHERE r.id =:roomId")
     void updateRoomStatus(@Param("roomId") Integer roomId, @Param("status") RoomStatus status);
 }

@@ -124,7 +124,7 @@ public class RoomService {
 
         boolean isParticipant = userRoomManager.isParticipant(user, room);
 
-        boolean isWait = !room.isWait();
+        boolean isWait = room.isWait();
 
         if(!isParticipant || !isWait) {
             throw new CommonException(ErrorCode.SERVER_ERROR);

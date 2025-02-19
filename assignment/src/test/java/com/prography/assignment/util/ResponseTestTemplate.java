@@ -3,12 +3,10 @@ package com.prography.assignment.util;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.prography.assignment.AssignmentApplication;
 import com.prography.assignment.global.dto.ApiResponse;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.actuate.autoconfigure.wavefront.WavefrontProperties;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpMethod;
@@ -55,10 +53,15 @@ public abstract class ResponseTestTemplate {
     }
 
 
-    protected MvcResult performWithParam(String url, String pathVariable , HttpMethod method) throws Exception {
+    protected MvcResult performWithParam(String url, String pathVariable, Object requestBody ,HttpMethod method) throws Exception {
+
         MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders
                 .request(method, url, pathVariable)
                 .contentType(MediaType.APPLICATION_JSON);
+
+        if(requestBody != null) {
+            requestBuilder.content(objectMapper.writeValueAsString(requestBody));
+        }
 
         return mockMvc.perform(requestBuilder).andReturn();
     }

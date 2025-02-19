@@ -8,6 +8,7 @@ import com.prography.assignment.api.userRoom.repository.UserRoomRepository;
 import com.prography.assignment.global.domain.UserRoom;
 import com.prography.assignment.global.exception.CommonException;
 import com.prography.assignment.global.exception.ErrorCode;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -22,7 +23,8 @@ public class UserRoomManager {
     private final UserRoomRepository userRoomRepository;
 
     public UserRoom findUserRoom(User user, Room room) {
-        return userRoomRepository.findByUserIdAndRoomId(user.getId(), room.getId());
+        return userRoomRepository.findByUserIdAndRoomId(user.getId(), room.getId())
+                .orElseThrow(() -> new CommonException(ErrorCode.SERVER_ERROR));
     }
 
     public void deleteAll() {
@@ -51,12 +53,12 @@ public class UserRoomManager {
         // 정원이 다 차지 않은지 체크
         switch (room.getRoomType()) {
             case SINGLE -> {
-                if(totalAttentions == 2) {
+                if (totalAttentions == 2) {
                     throw new CommonException(ErrorCode.SERVER_ERROR);
                 }
             }
             case DOUBLE -> {
-                if(totalAttentions == 4) {
+                if (totalAttentions == 4) {
                     throw new CommonException(ErrorCode.SERVER_ERROR);
                 }
             }
@@ -65,7 +67,7 @@ public class UserRoomManager {
             }
         }
 
-        if(isOneOfPlayer(user.getId())) {
+        if (isOneOfPlayer(user.getId())) {
             throw new CommonException(ErrorCode.SERVER_ERROR);
         }
     }
@@ -85,18 +87,18 @@ public class UserRoomManager {
                 .filter(ur -> ur.getTeam().equals(TeamType.BLUE)).count();
 
         // 두 수가 같으면 그대로 리턴
-        if(redTeamCount == blueTeamCount) {
+        if (redTeamCount == blueTeamCount) {
             return availableTeam;
         }
 
         switch (roomType) {
             case SINGLE -> {
-                if(redTeamCount == 1) {
+                if (redTeamCount == 1) {
                     availableTeam = TeamType.BLUE;
                 }
             }
             case DOUBLE -> {
-                if(redTeamCount == 2) {
+                if (redTeamCount == 2) {
                     availableTeam = TeamType.BLUE;
                 }
             }
@@ -109,6 +111,7 @@ public class UserRoomManager {
         userRoomRepository.deleteByUserIdAndRoomId(user.getId(), room.getId());
     }
 
+    @Transactional
     public void deleteUserRoom(Room room) {
         userRoomRepository.deleteAllByRoomId(room.getId());
     }
@@ -125,12 +128,12 @@ public class UserRoomManager {
         long otherSideTimeCount = userRoomList.stream()
                 .filter(ur -> ur.getTeam().equals(changeTeamType)).count();
 
-        if(room.getRoomType().equals(RoomType.SINGLE)) {
-            if(otherSideTimeCount >= 2) {
+        if (room.getRoomType().equals(RoomType.SINGLE)) {
+            if (otherSideTimeCount >= 2) {
                 throw new CommonException(ErrorCode.SERVER_ERROR);
             }
-        } else if(room.getRoomType().equals(RoomType.DOUBLE)) {
-            if(otherSideTimeCount >= 4) {
+        } else if (room.getRoomType().equals(RoomType.DOUBLE)) {
+            if (otherSideTimeCount >= 4) {
                 throw new CommonException(ErrorCode.SERVER_ERROR);
             }
         }
@@ -139,8 +142,9 @@ public class UserRoomManager {
     }
 
 
+    @Transactional
     public void changeTeam(Room room, User user, TeamType teamType) {
-        userRoomRepository.updateStatusByUserIdAndRoomId(teamType,room.getId(), user.getId());
+        userRoomRepository.updateStatusByUserIdAndRoomId(teamType, room.getId(), user.getId());
     }
 
 }
