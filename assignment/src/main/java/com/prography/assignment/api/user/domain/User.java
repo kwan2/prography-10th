@@ -3,17 +3,22 @@ package com.prography.assignment.api.user.domain;
 import com.prography.assignment.api.user.dto.FakerUserInfo;
 import com.prography.assignment.api.user.domain.type.UserStatus;
 import jakarta.persistence.*;
+import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.*;
 
 import java.time.LocalDateTime;
 
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Table(name ="user")
+@SQLDelete(sql = "UPDATE users SET is_deleted = true, deleted_at = CURRENT_TIMESTAMP WHERE id = ?")
+@Table(name ="users")
+@DynamicUpdate
+@SQLRestriction("is_deleted = false AND deleted_at is NULL")
 public class User {
 
     @Id

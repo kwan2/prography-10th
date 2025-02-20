@@ -23,7 +23,7 @@ public class UserManager {
 
     public User findUser(Integer userId) {
         return userRepository.findByUserIsNotDeleted(userId)
-                .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
+                .orElseThrow(() -> new CommonException(ErrorCode.SERVER_ERROR));
     }
 
     public void deleteAll(){

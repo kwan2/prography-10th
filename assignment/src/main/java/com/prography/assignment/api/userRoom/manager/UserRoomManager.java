@@ -129,11 +129,11 @@ public class UserRoomManager {
                 .filter(ur -> ur.getTeam().equals(changeTeamType)).count();
 
         if (room.getRoomType().equals(RoomType.SINGLE)) {
-            if (otherSideTimeCount >= 2) {
+            if (otherSideTimeCount >= 1) {
                 throw new CommonException(ErrorCode.SERVER_ERROR);
             }
         } else if (room.getRoomType().equals(RoomType.DOUBLE)) {
-            if (otherSideTimeCount >= 4) {
+            if (otherSideTimeCount >= 2) {
                 throw new CommonException(ErrorCode.SERVER_ERROR);
             }
         }

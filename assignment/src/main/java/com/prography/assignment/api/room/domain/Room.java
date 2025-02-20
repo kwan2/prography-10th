@@ -5,18 +5,21 @@ import com.prography.assignment.api.room.domain.type.RoomType;
 import com.prography.assignment.api.user.domain.User;
 import com.prography.assignment.api.user.domain.type.UserStatus;
 import jakarta.persistence.*;
+import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.apache.tomcat.util.http.parser.Host;
+import org.hibernate.annotations.*;
 
 import java.time.LocalDateTime;
 
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Table(name ="room")
+@Table(name = "room")
+@SQLDelete(sql = "UPDATE room SET is_deleted = true, deleted_at = NOW() WHERE id = ?")
+@SQLRestriction("is_deleted = false AND deleted_at is NULL")
 public class Room {
 
     @Id

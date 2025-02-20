@@ -20,7 +20,7 @@ public class TeamControllerTest extends ResponseTestTemplate {
     @DisplayName("팀 변경 API")
     public void changeTeamTest() throws Exception {
 
-        Integer userId = 1, roomId = 1;
+        Integer userId = 13, roomId = 2;
 
         TeamChangeRequest teamChangeRequest = new TeamChangeRequest(userId);
 

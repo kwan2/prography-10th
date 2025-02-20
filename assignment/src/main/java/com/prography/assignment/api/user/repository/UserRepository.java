@@ -1,6 +1,7 @@
 package com.prography.assignment.api.user.repository;
 
 import com.prography.assignment.api.user.domain.User;
+import org.hibernate.annotations.SQLDelete;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -12,9 +13,9 @@ import java.util.Optional;
 @Repository
 public interface UserRepository extends JpaRepository<User, Integer> {
 
-    @Query("SELECT u FROM User u WHERE u.isDeleted = false AND u.deletedAt IS NULL")
+    @Query("SELECT u FROM User u")
     List<User> findAllOrderByWithPagination(Pageable pageable);
 
-    @Query("SELECT u FROM User u WHERE u.id = :userId AND u.isDeleted = false AND u.deletedAt IS NULL")
+    @Query("SELECT u FROM User u WHERE u.id = :userId")
     Optional<User> findByUserIsNotDeleted(Integer userId);
 }

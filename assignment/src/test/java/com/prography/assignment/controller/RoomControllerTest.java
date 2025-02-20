@@ -48,7 +48,7 @@ public class RoomControllerTest extends ResponseTestTemplate {
     @DisplayName("방생성 API 응답 테스트")
     public void createRoomTest() throws Exception {
 
-        RoomCreateRequest requestBody = new RoomCreateRequest(3, RoomType.SINGLE.getValue(), "셋 핑퐁");
+        RoomCreateRequest requestBody = new RoomCreateRequest(11, RoomType.SINGLE.getValue(), "셋 핑퐁");
 
         MvcResult mvcResult = perform("/room", null, requestBody, HttpMethod.POST);
 
@@ -104,8 +104,8 @@ public class RoomControllerTest extends ResponseTestTemplate {
     public void joinRoomTest() throws Exception {
 
         //Given
-        RoomUpdateRequest requestBody = new RoomUpdateRequest(5);
-        String roomId = "3";
+        RoomUpdateRequest requestBody = new RoomUpdateRequest(12);
+        String roomId = "1";
 
         // When
         MvcResult mvcResult = performWithParam("/room/attention/{roomId}", roomId, requestBody, HttpMethod.POST);
@@ -127,7 +127,7 @@ public class RoomControllerTest extends ResponseTestTemplate {
     @Test
     @DisplayName("방 나가기 API 응답 테스트")
     public void leaveRoomTest() throws Exception {
-        Integer userId = 3, roomId = 4;
+        Integer userId = 11, roomId = 1;
 
         RoomUpdateRequest requestBody = new RoomUpdateRequest(userId);
 

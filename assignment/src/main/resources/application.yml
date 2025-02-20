@@ -11,7 +11,6 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.H2Dialect
-        globally_quoted_identifiers : true
 
   datasource:
     driver-class-name: org.h2.Driver
