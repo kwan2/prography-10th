@@ -200,10 +200,4 @@ public class RoomControllerTest extends ResponseTestTemplate {
         assertThat(apiResponse).isNotNull();
         assertThat(apiResponse.getCode()).isEqualTo(201);
     }
-
-    @Test
-    @DisplayName("팀 변경 API")
-    public void changeTeamTest() throws Exception {
-
-    }
 }
