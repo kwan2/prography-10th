@@ -27,6 +27,6 @@ public interface RoomRepository extends JpaRepository<Room, Integer> {
 
     @Modifying
     @Transactional
-    @Query("UPDATE Room r SET r.status = :status WHERE r.id =:roomId")
+    @Query("UPDATE Room r SET r.status = :status, r.updateAt = NOW() WHERE r.id =:roomId")
     void updateRoomStatus(@Param("roomId") Integer roomId, @Param("status") RoomStatus status);
 }

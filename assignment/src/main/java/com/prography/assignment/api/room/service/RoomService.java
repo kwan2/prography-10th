@@ -51,7 +51,7 @@ public class RoomService {
             throw new CommonException(ErrorCode.SERVER_ERROR);
         }
         // 방생성
-        Room room = Room.of(request.title(), host, RoomType.valueOf(request.roomType()) ,RoomStatus.WAIT);
+        Room room = Room.of(request.title(), host, request.roomType() ,RoomStatus.WAIT);
 
         room = roomManager.insertRoom(room);
 

@@ -18,7 +18,7 @@ import java.time.LocalDateTime;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "room")
-@SQLDelete(sql = "UPDATE room SET is_deleted = true, deleted_at = NOW() WHERE id = ?")
+@SQLDelete(sql = "UPDATE room SET is_deleted = true, deleted_at = NOW(), update_at = NOW() WHERE id = ?")
 @SQLRestriction("is_deleted = false AND deleted_at is NULL")
 public class Room {
 

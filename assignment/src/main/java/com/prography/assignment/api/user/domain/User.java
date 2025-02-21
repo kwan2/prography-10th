@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@SQLDelete(sql = "UPDATE users SET is_deleted = true, deleted_at = CURRENT_TIMESTAMP WHERE id = ?")
+@SQLDelete(sql = "UPDATE users SET is_deleted = true, deleted_at = NOW(), update_at = NOW() WHERE id = ?")
 @Table(name ="users")
 @DynamicUpdate
 @SQLRestriction("is_deleted = false AND deleted_at is NULL")
