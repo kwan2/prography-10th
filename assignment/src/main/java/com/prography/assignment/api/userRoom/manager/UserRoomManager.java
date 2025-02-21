@@ -107,6 +107,21 @@ public class UserRoomManager {
         return availableTeam;
     }
 
+    public boolean isFull( Room room) {
+
+        Integer userCount = userRoomRepository.countUserRoomByRoomId(room.getId());
+
+        switch (room.getRoomType()) {
+            case SINGLE -> {
+                return userCount == 2;
+            }
+            case DOUBLE -> {
+                return userCount == 4;
+            }
+        }
+
+        return false;
+    }
     public void deleteUserRoom(User user, Room room) {
         userRoomRepository.deleteByUserIdAndRoomId(user.getId(), room.getId());
     }

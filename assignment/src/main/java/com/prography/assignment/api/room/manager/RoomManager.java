@@ -55,6 +55,7 @@ public class RoomManager {
         roomRepository.updateRoomStatus(room.getId(), status);
     }
 
+
     @Transactional
     public void scheduleStatusChange(Room room, RoomStatus status) {
         Instant executionTime = Instant.now().plusSeconds(60);

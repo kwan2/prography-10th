@@ -27,6 +27,9 @@ public interface UserRoomRepository extends JpaRepository<UserRoom, Integer> {
     @Query("SELECT COUNT(ur) > 0 FROM UserRoom ur WHERE ur.user.id = :userId AND ur.room.id = :roomId")
     boolean existsByUserIdAndRoomId(@Param("userId") Integer userId, @Param("roomId") Integer roomId);
 
+    @Query("SELECT COUNT(ur) FROM UserRoom ur WHERE ur.room.id = :roomId")
+    Integer countUserRoomByRoomId( @Param("roomId") Integer roomId);
+
     @Modifying
     @Transactional
     @Query("DELETE FROM UserRoom ur WHERE ur.room.id = :roomId")

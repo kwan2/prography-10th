@@ -2,7 +2,6 @@ package com.prography.assignment.api.room.service;
 
 import com.prography.assignment.api.room.domain.Room;
 import com.prography.assignment.api.room.domain.type.RoomStatus;
-import com.prography.assignment.api.room.domain.type.RoomType;
 import com.prography.assignment.api.room.dto.RoomDetailResponse;
 import com.prography.assignment.api.room.dto.RoomDto;
 import com.prography.assignment.api.room.dto.request.RoomCreateRequest;
@@ -149,6 +148,10 @@ public class RoomService {
         Room room = roomManager.findRoom(roomId);
 
         if(!room.isHost(user) || !room.isWait()) {
+            throw new CommonException(ErrorCode.SERVER_ERROR);
+        }
+
+        if(userRoomManager.isFull(room)) {
             throw new CommonException(ErrorCode.SERVER_ERROR);
         }
 

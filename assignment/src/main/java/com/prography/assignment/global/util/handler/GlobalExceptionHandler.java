@@ -7,6 +7,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.ExampleObject;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -29,9 +30,10 @@ public class GlobalExceptionHandler {
             }
         """))
     )
-    public ApiResponse<?> handleApiException(CommonException e) {
+    public ResponseEntity<ApiResponse<?>> handleApiException(CommonException e) {
         log.error("[Prography 과제 개발자 예외 : {}", e.getMessage());
-        return ApiResponse.fail(ErrorCode.SERVER_ERROR);
+        ApiResponse<Void> responseBody = ApiResponse.fail(ErrorCode.SERVER_ERROR);
+        return new ResponseEntity<>(responseBody, ErrorCode.SERVER_ERROR.getStatus());
     }
 
 }
