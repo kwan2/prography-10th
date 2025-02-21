@@ -5,7 +5,7 @@ import com.prography.assignment.api.room.domain.type.RoomType;
 import com.prography.assignment.api.user.domain.User;
 import com.prography.assignment.api.userRoom.domain.type.TeamType;
 import com.prography.assignment.api.userRoom.repository.UserRoomRepository;
-import com.prography.assignment.global.domain.UserRoom;
+import com.prography.assignment.api.userRoom.domain.UserRoom;
 import com.prography.assignment.global.exception.CommonException;
 import com.prography.assignment.global.exception.ErrorCode;
 import jakarta.transaction.Transactional;

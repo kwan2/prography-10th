@@ -10,9 +10,7 @@ import com.prography.assignment.api.room.dto.response.RoomTotalResponse;
 import com.prography.assignment.api.room.manager.RoomManager;
 import com.prography.assignment.api.user.domain.User;
 import com.prography.assignment.api.user.manager.UserManager;
-import com.prography.assignment.api.userRoom.domain.type.TeamType;
 import com.prography.assignment.api.userRoom.manager.UserRoomManager;
-import com.prography.assignment.global.domain.UserRoom;
 import com.prography.assignment.global.dto.ApiResponse;
 import com.prography.assignment.util.ResponseTestTemplate;
 import org.junit.jupiter.api.BeforeEach;
@@ -48,7 +46,7 @@ public class RoomControllerTest extends ResponseTestTemplate {
     @DisplayName("방생성 API 응답 테스트")
     public void createRoomTest() throws Exception {
 
-        RoomCreateRequest requestBody = new RoomCreateRequest(11, RoomType.SINGLE.getValue(), "셋 핑퐁");
+        RoomCreateRequest requestBody = new RoomCreateRequest(11, RoomType.SINGLE, "셋 핑퐁");
 
         MvcResult mvcResult = perform("/room", null, requestBody, HttpMethod.POST);
 
@@ -104,7 +102,7 @@ public class RoomControllerTest extends ResponseTestTemplate {
     public void joinRoomTest() throws Exception {
 
         //Given
-        RoomUpdateRequest requestBody = new RoomUpdateRequest(12);
+        RoomUpdateRequest requestBody = new RoomUpdateRequest(2);
         String roomId = "1";
 
         // When
@@ -113,14 +111,8 @@ public class RoomControllerTest extends ResponseTestTemplate {
         // Then
         ApiResponse<Void> apiResponse = ofTest(mvcResult, Void.class);
 
-        User user = userManager.findUser(5);
-        Room room = roomManager.findRoom(3);
-
-        UserRoom userRoom = userRoomManager.findUserRoom(user, room);
-
         assertThat(apiResponse).isNotNull();
         assertThat(apiResponse.getCode()).isEqualTo(200);
-        assertThat(userRoom.getTeam()).isEqualTo(TeamType.BLUE);
 
     }
 

@@ -3,8 +3,9 @@ package com.prography.assignment.api.room.domain;
 import com.prography.assignment.api.room.domain.type.RoomStatus;
 import com.prography.assignment.api.room.domain.type.RoomType;
 import com.prography.assignment.api.user.domain.User;
-import com.prography.assignment.api.user.domain.type.UserStatus;
+import com.prography.assignment.api.userRoom.domain.UserRoom;
 import jakarta.persistence.*;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -13,6 +14,8 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.*;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -53,6 +56,9 @@ public class Room {
 
     @Column(name = "deleted_at")
     private LocalDateTime deletedAt;
+
+    @OneToMany(mappedBy = "room", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    private List<UserRoom> userRooms = new ArrayList<>();
 
     public void softDelete() {
         this.isDeleted = true;

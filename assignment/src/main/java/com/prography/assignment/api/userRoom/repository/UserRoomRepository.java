@@ -1,7 +1,7 @@
 package com.prography.assignment.api.userRoom.repository;
 
 import com.prography.assignment.api.userRoom.domain.type.TeamType;
-import com.prography.assignment.global.domain.UserRoom;
+import com.prography.assignment.api.userRoom.domain.UserRoom;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -35,7 +35,6 @@ public interface UserRoomRepository extends JpaRepository<UserRoom, Integer> {
     @Modifying
     @Query("DELETE FROM UserRoom ur WHERE ur.user.id = :userId AND ur.room.id = :roomId")
     void deleteByUserIdAndRoomId(@Param("userId") Integer userId, @Param("roomId") Integer roomId);
-
 
     @Modifying
     @Query("UPDATE UserRoom ur SET ur.team = :teamType WHERE ur.room.id = :roomId AND ur.user.id = :userId")

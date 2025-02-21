@@ -15,6 +15,7 @@ import org.springframework.scheduling.TaskScheduler;
 import org.springframework.stereotype.Component;
 
 import java.time.Instant;
+import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -34,7 +35,7 @@ public class RoomManager {
     }
 
     public void deleteAll() {
-        roomRepository.deleteAll();
+        roomRepository.deleteAllBySoftDelete(LocalDateTime.now());
     }
 
     public Page<Room> findRoomPageInfo(Pageable pageable) {

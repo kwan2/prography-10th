@@ -1,4 +1,4 @@
-package com.prography.assignment.global.domain;
+package com.prography.assignment.api.userRoom.domain;
 
 import com.prography.assignment.api.room.domain.Room;
 import com.prography.assignment.api.user.domain.User;
@@ -20,11 +20,11 @@ public class UserRoom {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "room_id", nullable = false)
     private Room room;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
